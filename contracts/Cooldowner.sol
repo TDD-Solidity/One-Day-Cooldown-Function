@@ -5,13 +5,13 @@ contract Cooldowner {
 
     string public foo = "bar";
 
-    uint256 cooldownTime = 1 days;
+    uint cooldownTime = 1 days;
 
-    mapping(address => uint32) readyTimes;
-    mapping(address => uint32) prizes;
+    mapping(address => uint) readyTimes;
+    mapping(address => uint) prizes;
 
     function _triggerCooldown(address account) internal {
-        readyTimes[account] = uint32(block.timestamp + cooldownTime);
+        readyTimes[account] = block.timestamp + cooldownTime;
     }
 
     function _isReady(address account) internal view returns (bool) {
@@ -25,7 +25,7 @@ contract Cooldowner {
         _triggerCooldown(msg.sender);
     }
 
-    function getMyPrizes() external view returns (uint32) {
+    function getMyPrizes() external view returns (uint) {
       return prizes[msg.sender];
     }
 

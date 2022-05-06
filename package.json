@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/TDD-Solidity/One-Day-Cooldown-Function#readme",
   "devDependencies": {
     "solidity-coverage": "^0.7.17",
+    "truffle": "^5.5.12",
     "truffle-assertions": "^0.9.2"
   }
 }

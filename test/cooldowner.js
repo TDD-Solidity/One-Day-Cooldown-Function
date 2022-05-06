@@ -6,18 +6,13 @@ contract("Cooldowner", function (accounts) {
 
   const [owner, user1, user2] = accounts;
 
-  const SECONDS_IN_ONE_DAY = 86400;
+  const SECONDS_IN_ONE_DAY = 60 * 60 * 24;
 
   let cooldowner;
 
   beforeEach(async () => {
     cooldowner = await Cooldowner.new();
-
   })
-
-  it("should assert true", async function () {
-    return assert.isTrue(true);
-  });
 
   it('has a foo string', async () => {
 
@@ -97,7 +92,7 @@ contract("Cooldowner", function (accounts) {
   it('a user must wait a full day before claiming another prize', async () => {
 
     await cooldowner.claimDailyPrize();
-    await time.increase(time.duration.seconds(SECONDS_IN_ONE_DAY - 1));
+    await time.increase(time.duration.seconds(SECONDS_IN_ONE_DAY - 2));
 
     await truffleAssert.reverts(
       cooldowner.claimDailyPrize(),
