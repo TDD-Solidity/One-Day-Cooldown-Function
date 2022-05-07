@@ -98,7 +98,6 @@ contract("Cooldowner", function (accounts) {
       await truffleAssert.reverts(cooldowner.claimDailyPrize(), ALREADY_CLAIMED_ERROR_MSG);
     })
 
-
     it('users cannot claim prizes even one second early!', async () => {
 
       await cooldowner.claimDailyPrize();
