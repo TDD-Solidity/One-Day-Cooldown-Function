@@ -2,31 +2,30 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Cooldowner {
+    uint256 cooldownTime = 1 days;
 
-    string public foo = "bar";
+    mapping(address => uint256) readyTimes;
+    mapping(address => uint256) prizes;
 
-    uint cooldownTime = 1 days;
+    // Can one be called once per day
+    function claimDailyPrize() external isReady(msg.sender) {
+        prizes[msg.sender]++;
+        _triggerCooldown(msg.sender);
+    }
 
-    mapping(address => uint) readyTimes;
-    mapping(address => uint) prizes;
+    modifier isReady(address account) {
+        require(
+            readyTimes[account] < block.timestamp,
+            "Already claimed a prize today!"
+        );
+        _;
+    }
 
     function _triggerCooldown(address account) internal {
         readyTimes[account] = block.timestamp + cooldownTime;
     }
 
-    function _isReady(address account) internal view returns (bool) {
-        return readyTimes[account] <= block.timestamp;
+    function getMyPrizes() external view returns (uint256) {
+        return prizes[msg.sender];
     }
-
-    // Can one be called once per day
-    function claimDailyPrize() external {
-        require(_isReady(msg.sender), "Already claimed a prize today!");
-        prizes[msg.sender]++;
-        _triggerCooldown(msg.sender);
-    }
-
-    function getMyPrizes() external view returns (uint) {
-      return prizes[msg.sender];
-    }
-
 }
